@@ -1,13 +1,11 @@
 require 'pathname'
 
-source :rubygems
-
-gemspec
+source 'http://rubygems.org'
 
 SOURCE         = ENV.fetch('SOURCE', :git).to_sym
 REPO_POSTFIX   = SOURCE == :path ? ''                                : '.git'
 DATAMAPPER     = SOURCE == :path ? Pathname(__FILE__).dirname.parent : 'http://github.com/datamapper'
-DM_VERSION     = '~> 1.3.0.beta'
+DM_VERSION     = '~> 1.2.0'
 CURRENT_BRANCH = ENV.fetch('GIT_BRANCH', 'master')
 RAILS_VERSION  = '~> 3.0'
 
@@ -18,9 +16,16 @@ gem 'dm-core',     DM_VERSION,
 gem 'activemodel', RAILS_VERSION, :require => nil
 
 group :development do
+
   gem 'dm-validations', DM_VERSION,
     SOURCE  => "#{DATAMAPPER}/dm-validations#{REPO_POSTFIX}",
     :branch => CURRENT_BRANCH
+
+  gem 'jeweler',        '~> 1.6.4'
+  gem 'rake',           '~> 0.9.2'
+  gem 'rspec',          '~> 1.3.2'
+  gem 'test-unit',      '= 1.2.3'
+
 end
 
 platforms :mri_18 do
